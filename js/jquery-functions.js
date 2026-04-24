@@ -22,24 +22,6 @@ $("document").ready(function () {
       .then((data) => {
         all_questions = data;
         totalQuestions = data.length;
-
-        // Fetch the second JSON file
-        return fetch("question-utils/all-questions-en.json")
-          .then((response) => response.json())
-          .then((dataEn) => {
-            all_questions_en = dataEn;
-          })
-          .catch((error) => {
-            console.error("Failed to fetch all-questions-en.json:", error);
-
-            // Show error message to the user
-            const errorMessage = document.createElement("div");
-            errorMessage.textContent =
-              "Error: Failed to fetch all-questions-en.json.";
-            $(".question-container").html(errorMessage);
-
-            hideFormBtns();
-          });
       })
       .catch((error) => {
         console.error("Failed to fetch all-questions:", error);
@@ -55,28 +37,11 @@ $("document").ready(function () {
 
   //Once the form begins, the evidences' data and length are fetched.
   function getEvidences() {
-    return fetch("question-utils/cpsv.json")
+    return fetch("question-utils/cpsv.json") //Τι είναι αυτό;
       .then((response) => response.json())
       .then((data) => {
         all_evidences = data;
         totalEvidences = data.length;
-
-        // Fetch the second JSON file
-        return fetch("question-utils/cpsv-en.json")
-          .then((response) => response.json())
-          .then((dataEn) => {
-            all_evidences_en = dataEn;
-          })
-          .catch((error) => {
-            console.error("Failed to fetch cpsv-en:", error);
-
-            // Show error message to the user
-            const errorMessage = document.createElement("div");
-            errorMessage.textContent = "Error: Failed to fetch cpsv-en.json.";
-            $(".question-container").html(errorMessage);
-
-            hideFormBtns();
-          });
       })
       .catch((error) => {
         console.error("Failed to fetch cpsv:", error);
@@ -87,37 +52,6 @@ $("document").ready(function () {
         $(".question-container").html(errorMessage);
 
         hideFormBtns();
-      });
-  }
-
-  //Once the form begins, the faqs' data is fetched.
-  function getFaq() {
-    return fetch("question-utils/faq.json")
-      .then((response) => response.json())
-      .then((data) => {
-        faq = data;
-        totalFaq = data.length;
-
-        // Fetch the second JSON file
-        return fetch("question-utils/faq-en.json")
-          .then((response) => response.json())
-          .then((dataEn) => {
-            faq_en = dataEn;
-          })
-          .catch((error) => {
-            console.error("Failed to fetch faq-en:", error);
-            // Show error message to the user
-            const errorMessage = document.createElement("div");
-            errorMessage.textContent = "Error: Failed to fetch faq-en.json.";
-            $(".question-container").html(errorMessage);
-          });
-      })
-      .catch((error) => {
-        console.error("Failed to fetch faq:", error);
-        // Show error message to the user
-        const errorMessage = document.createElement("div");
-        errorMessage.textContent = "Error: Failed to fetch faq.json.";
-        $(".question-container").html(errorMessage);
       });
   }
 
@@ -149,58 +83,6 @@ $("document").ready(function () {
     result.textContent = text;
     resultWrapper.appendChild(result);
   }
-
-  function loadFaqs() {
-    var faqData = currentLanguage === "greek" ? faq : faq_en;
-    var faqTitle =
-      currentLanguage === "greek"
-        ? "Συχνές Ερωτήσεις"
-        : "Frequently Asked Questions";
-
-    var faqElement = document.createElement("div");
-
-    faqElement.innerHTML = `
-        <div class="govgr-heading-m language-component" data-component="faq" tabIndex="15">
-          ${faqTitle}
-        </div>
-    `;
-
-    var ft = 16;
-    faqData.forEach((faqItem) => {
-      var faqSection = document.createElement("details");
-      faqSection.className = "govgr-accordion__section";
-      faqSection.tabIndex = ft;
-
-      faqSection.innerHTML = `
-        <summary class="govgr-accordion__section-summary">
-          <h2 class="govgr-accordion__section-heading">
-            <span class="govgr-accordion__section-button">
-              ${faqItem.question}
-            </span>
-          </h2>
-        </summary>
-        <div class="govgr-accordion__section-content">
-          <p class="govgr-body">
-          ${convertURLsToLinks(faqItem.answer)}
-          </p>
-        </div>
-      `;
-
-      faqElement.appendChild(faqSection);
-      ft++;
-    });
-
-    $(".faqContainer").html(faqElement);
-  }
-
-  // get the url from faqs and link it
-  function convertURLsToLinks(text) {
-    return text.replace(
-      /https:\/\/www\.gov\.gr\/[\S]+/g,
-      '<a href="$&" target="_blank">' + "myKEPlive" + "</a>" + "."
-    );
-  }
-
 
   //Εachtime back/next buttons are pressed the form loads a question
   function loadQuestion(questionId, noError) {
