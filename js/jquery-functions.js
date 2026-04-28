@@ -17,7 +17,7 @@ $("document").ready(function () {
 
   //Once the form begins, the questions' data and length are fetched.
   function getQuestions() {
-    return fetch("question-utils/all-questions.json")
+    return fetch("question-utils/physiotherapist-all-questions.json")
       .then((response) => response.json())
       .then((data) => {
         all_questions = data;
@@ -37,7 +37,7 @@ $("document").ready(function () {
 
   //Once the form begins, the evidences' data and length are fetched.
   function getEvidences() {
-    return fetch("question-utils/cpsv.json") //Τι είναι αυτό;
+    return fetch("question-utils/physiotherapist-cpsv.json") //Τι είναι αυτό;
       .then((response) => response.json())
       .then((data) => {
         all_evidences = data;
